@@ -11,4 +11,6 @@ COPY ./documents /code/documents
 
 EXPOSE 80
 
+RUN pip install pypdf
+
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "80"]

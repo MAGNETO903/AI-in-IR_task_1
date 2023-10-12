@@ -86,9 +86,8 @@ qa_chain = RetrievalQA.from_chain_type(
 
 @app.get("/message")
 def message(user_id: str, message: str):
-    #llm_response = qa_chain({"query": message})
-    #return {"message": llm_response['result']}
-    return {"message": 1}
+    llm_response = qa_chain({"query": message})
+    return {"message": llm_response['result']}
 
 if __name__ == '__main__':
     uvicorn.run(app)

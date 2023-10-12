@@ -17,7 +17,7 @@ from huggingface_hub import hf_hub_download
 app = FastAPI()
 
 # read, parse and split documents
-root_dir = '../'
+root_dir = './'
 
 # PDFs
 pdf_loader_1 = PyPDFLoader(root_dir+'documents/doc1.pdf')

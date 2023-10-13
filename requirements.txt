@@ -4,3 +4,4 @@ langchain==0.0.313
 uvicorn==0.23.2
 pypdf==3.16.4
 sentence-transformers==2.2.2
+faiss-cpu==1.7.2

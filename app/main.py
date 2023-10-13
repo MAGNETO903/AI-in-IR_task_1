@@ -17,7 +17,7 @@ import time
 print(time.ctime(), "app launched")
 
 
-app = FastAPI()
+
 
 # read, parse and split documents
 root_dir = './'
@@ -89,7 +89,7 @@ qa_chain = RetrievalQA.from_chain_type(
 )
 
 print(time.ctime(), "chain ready")
-
+app = FastAPI()
 @app.get("/message")
 def message(user_id: str, message: str):
     llm_response = qa_chain({"query": message})

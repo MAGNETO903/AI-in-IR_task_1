@@ -12,6 +12,9 @@ from langchain.prompts import PromptTemplate
 from langchain.chains import RetrievalQA
 from huggingface_hub import hf_hub_download
 
+import time
+
+print(time.ctime(), "app launched")
 
 
 app = FastAPI()
@@ -44,11 +47,12 @@ text_splitter = RecursiveCharacterTextSplitter(
 )
 
 texts = text_splitter.split_documents(documents)
-
+print(time.ctime(), "documents loaded")
 # creating vector DB
 
 embedder = HuggingFaceEmbeddings(model_name='intfloat/multilingual-e5-base')
 vec_db = FAISS.from_documents(texts, embedder)
+print(time.ctime(), "vector DB ready")
 
 # our LLM
 model_name_or_path = "TheBloke/Llama-2-7b-Chat-GGUF"
@@ -64,7 +68,7 @@ llm = LlamaCpp(
     top_p=0.9, # Verbose is required to pass to the callback manager
     lang="ru",
 )
-
+print(time.ctime(), "llm ready")
 # building final chain
 prompt_template = """
 Используйте следующие фрагменты контекста, чтобы ответить на вопрос в конце.
@@ -83,6 +87,8 @@ qa_chain = RetrievalQA.from_chain_type(
     retriever=vec_db.as_retriever(),
     chain_type_kwargs={"prompt": PROMPT}
 )
+
+print(time.ctime(), "chain ready")
 
 @app.get("/message")
 def message(user_id: str, message: str):

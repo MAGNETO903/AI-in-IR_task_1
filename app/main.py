@@ -43,8 +43,8 @@ loader_all = MergedDataLoader(loaders=[
 documents = loader_all.load()
 
 text_splitter = RecursiveCharacterTextSplitter(
-    chunk_size=1500,
-    chunk_overlap=150
+    chunk_size=1000,
+    chunk_overlap=100
 )
 
 texts = text_splitter.split_documents(documents)
@@ -63,8 +63,8 @@ MODEL_PATH = hf_hub_download(repo_id=model_name_or_path, filename=model_basename
 # Make sure the model path is correct for your system!
 llm = LlamaCpp(
     model_path=MODEL_PATH,
-    temperature=0.0,
-    max_tokens=1500,
+    temperature=0.2,
+    max_tokens=2000,
     n_ctx = 2500,
     top_p=0.9, # Verbose is required to pass to the callback manager
     lang="ru",
@@ -85,7 +85,7 @@ PROMPT = PromptTemplate(
 qa_chain = RetrievalQA.from_chain_type(
     llm=llm,
     chain_type='stuff',
-    retriever=vec_db.as_retriever(search_type='mmr'),
+    retriever=vec_db.as_retriever(),
     chain_type_kwargs={"prompt": PROMPT}
 )
 

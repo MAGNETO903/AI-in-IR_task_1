@@ -8,7 +8,6 @@ from langchain.document_loaders.merge import MergedDataLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.vectorstores import FAISS
-from langchain.vectorstores import Chroma
 from langchain.prompts import PromptTemplate
 from langchain.chains import RetrievalQA
 from huggingface_hub import hf_hub_download
@@ -49,8 +48,8 @@ text_splitter = RecursiveCharacterTextSplitter(
 
 texts = text_splitter.split_documents(documents)
 print(time.ctime(), "documents loaded")
-
 # creating vector DB
+
 embedder = HuggingFaceEmbeddings(model_name='intfloat/multilingual-e5-base')
 vec_db = FAISS.from_documents(texts, embedder)
 print(time.ctime(), "vector DB ready")
@@ -63,9 +62,9 @@ MODEL_PATH = hf_hub_download(repo_id=model_name_or_path, filename=model_basename
 # Make sure the model path is correct for your system!
 llm = LlamaCpp(
     model_path=MODEL_PATH,
-    temperature=0.0,
+    temperature=0.2,
     max_tokens=2000,
-    n_ctx = 3*1024,
+    n_ctx = 1024*3,
     top_p=0.9, # Verbose is required to pass to the callback manager
     lang="ru",
 )
@@ -88,7 +87,7 @@ qa_chain = RetrievalQA.from_chain_type(
     retriever=vec_db.as_retriever(),
     chain_type_kwargs={"prompt": PROMPT}
 )
-                  
+
 print(time.ctime(), "chain ready")
 app = FastAPI()
 @app.get("/message")

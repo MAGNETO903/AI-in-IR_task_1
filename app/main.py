@@ -85,7 +85,7 @@ PROMPT = PromptTemplate(
 qa_chain = RetrievalQA.from_chain_type(
     llm=llm,
     chain_type='stuff',
-    retriever=vec_db.as_retriever(),
+    retriever=vec_db.as_retriever(search_type='mmr'),
     chain_type_kwargs={"prompt": PROMPT}
 )
 

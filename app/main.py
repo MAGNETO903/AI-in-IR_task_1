@@ -49,8 +49,8 @@ text_splitter = RecursiveCharacterTextSplitter(
 
 texts = text_splitter.split_documents(documents)
 print(time.ctime(), "documents loaded")
-# creating vector DB
 
+# creating vector DB
 embedder = HuggingFaceEmbeddings(model_name='intfloat/multilingual-e5-base')
 vec_db = FAISS.from_documents(texts, embedder)
 print(time.ctime(), "vector DB ready")
@@ -63,9 +63,9 @@ MODEL_PATH = hf_hub_download(repo_id=model_name_or_path, filename=model_basename
 # Make sure the model path is correct for your system!
 llm = LlamaCpp(
     model_path=MODEL_PATH,
-    temperature=0.2,
-    max_tokens=2000,
-    n_ctx = 3*1024,
+    temperature=0.1,
+    max_tokens=1500,
+    n_ctx = 2500,
     top_p=0.9, # Verbose is required to pass to the callback manager
     lang="ru",
 )
@@ -85,7 +85,7 @@ PROMPT = PromptTemplate(
 qa_chain = RetrievalQA.from_chain_type(
     llm=llm,
     chain_type='stuff',
-    retriever=vec_db.as_retriever(search_type="similarity", search_kwargs={"k":4}),
+    retriever=vec_db.as_retriever(),
     chain_type_kwargs={"prompt": PROMPT}
 )
                   

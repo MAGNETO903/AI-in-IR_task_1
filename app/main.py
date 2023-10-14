@@ -8,6 +8,7 @@ from langchain.document_loaders.merge import MergedDataLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.vectorstores import FAISS
+from langchain.vectorstores import Chroma
 from langchain.prompts import PromptTemplate
 from langchain.chains import RetrievalQA
 from huggingface_hub import hf_hub_download
@@ -51,7 +52,7 @@ print(time.ctime(), "documents loaded")
 # creating vector DB
 
 embedder = HuggingFaceEmbeddings(model_name='intfloat/multilingual-e5-base')
-vec_db = FAISS.from_documents(texts, embedder)
+vec_db = Chroma.from_documents(texts, embedder)
 print(time.ctime(), "vector DB ready")
 
 # our LLM

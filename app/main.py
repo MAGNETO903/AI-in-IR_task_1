@@ -88,7 +88,7 @@ qa_chain = RetrievalQA.from_chain_type(
     retriever=vec_db.as_retriever(),
     chain_type_kwargs={"prompt": PROMPT}
 )
-
+                  
 print(time.ctime(), "chain ready")
 app = FastAPI()
 @app.get("/message")

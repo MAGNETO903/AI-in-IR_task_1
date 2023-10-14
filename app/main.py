@@ -63,7 +63,7 @@ MODEL_PATH = hf_hub_download(repo_id=model_name_or_path, filename=model_basename
 # Make sure the model path is correct for your system!
 llm = LlamaCpp(
     model_path=MODEL_PATH,
-    temperature=0.2,
+    temperature=0.0,
     max_tokens=2000,
     n_ctx = 3*1024,
     top_p=0.9, # Verbose is required to pass to the callback manager
@@ -85,7 +85,7 @@ PROMPT = PromptTemplate(
 qa_chain = RetrievalQA.from_chain_type(
     llm=llm,
     chain_type='stuff',
-    retriever=vec_db.as_retriever(search_kwargs={"k":3}),
+    retriever=vec_db.as_retriever(),
     chain_type_kwargs={"prompt": PROMPT}
 )
                   

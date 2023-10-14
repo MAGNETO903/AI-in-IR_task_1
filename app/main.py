@@ -85,7 +85,7 @@ PROMPT = PromptTemplate(
 qa_chain = RetrievalQA.from_chain_type(
     llm=llm,
     chain_type='stuff',
-    retriever=vec_db.as_retriever(),
+    retriever=vec_db.as_retriever(search_type="similarity", search_kwargs={"k":4}),
     chain_type_kwargs={"prompt": PROMPT}
 )
                   

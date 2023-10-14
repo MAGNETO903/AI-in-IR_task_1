@@ -43,8 +43,8 @@ loader_all = MergedDataLoader(loaders=[
 documents = loader_all.load()
 
 text_splitter = RecursiveCharacterTextSplitter(
-    chunk_size=1000,
-    chunk_overlap=100
+    chunk_size=1500,
+    chunk_overlap=150
 )
 
 texts = text_splitter.split_documents(documents)
@@ -65,7 +65,7 @@ llm = LlamaCpp(
     model_path=MODEL_PATH,
     temperature=0.2,
     max_tokens=2000,
-    n_ctx = 2500,
+    n_ctx = 3*1024,
     top_p=0.9, # Verbose is required to pass to the callback manager
     lang="ru",
 )

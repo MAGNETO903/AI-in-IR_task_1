@@ -40,6 +40,8 @@
 В рамках Договора кредитной карты/Токена Банк использует следующие валюты ПС для расчетов: рубли РФ (расчеты в РФ) — МИР, Visa, MasterCard, UnionPay International; рубли РФ (расчеты за пределами РФ) — МИР.<br>
 
 ## Дополнительная информация
-Фреймворк: Langchain <br>
-Emedding-модель: https://huggingface.co/intfloat/multilingual-e5-base <br>
-LLM-модель: 
+Фреймворк: **Langchain** (https://python.langchain.com/) <br>
+Векторное хранилище: **FAISS** <br>
+Emedding-модель: **multilingual-e5-base** (https://huggingface.co/intfloat/multilingual-e5-base) <br>
+LLM-модель: **Llama-2-7b** (https://huggingface.co/TheBloke/Llama-2-7b-Chat-GGUF (llama-2-7b-chat.Q4_K_M.gguf) ) <br>
+Тип цепочки: **RetrievalQA** 
